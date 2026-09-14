@@ -11,8 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    # Only run on original repository
-    if: ${{ github.repository_id == 635386785 }}
+    # Only run on this fork. Publish builds from v1, so without this sync a push
+    # to main produces an image built from whatever v1 last held -- a fresh tag
+    # on stale source. Upstream's id is 635386785; this line is fork-local and
+    # must never be sent back in a pull request.
+    if: ${{ github.repository_id == 1208783890 }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
